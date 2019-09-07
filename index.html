@@ -7,11 +7,40 @@
     </head>
 
     <body>
+        <h1>Train Schedule</h1>
+
+        <div id="train-schedule">
+            <h3>Current Train Schedule</h3>
+            <table>
+                <tr>
+                    <th>Train Name</th>
+                    <th>Destination</th>
+                    <th>Frequency (mins)</th>
+                    <th>Next Arrival</th>
+                    <th class="no-border">Minutes Away</th>
+                </tr>
+                <tbody id="body"></tbody>
+            </table>
+        </div>
+
+        <form>
+            <h3>Add Train</h3>
+            Train Name:<br>
+            <input type="text" id="name" placeholder="Starlight Express"><br>
+            Destination<br>
+            <input type="text" id="place" placeholder="Toronto, CA"><br>
+            First Train Time (HH:mm - military time):<br>
+            <input type="text" id="time" placeholder="05:50"><br>
+            Frequency (mins):<br>
+            <input type="text" id="frequency" placeholder="30"><br>
+            <input type="submit" id="add-train" value="Submit">
+        </form>
         
         <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="javascript/app.js"></script>
+        <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+        <script src="assets/javascript/app.js"></script>
     </body>
 </html>

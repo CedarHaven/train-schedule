@@ -1,0 +1,52 @@
+html, body{
+    height: 100%;
+    margin: 0;
+    font-size: 100%;
+}
+
+h1{
+    text-align: center;
+    border-bottom: black 2px solid;
+    background-color: gray;
+    padding: 20px 5px 20px 5px;
+    margin-top: 0;
+}
+
+h3{
+    border-bottom: black 2px solid;
+    padding: 0px 10px 15px 10px;
+}
+
+form{
+    border: black 2px solid;
+    width: 70%;
+    margin-left: 15%;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+#train-schedule{
+    border: black 2px solid;
+    width: 70%;
+    margin-left: 15%;
+    text-align: center;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+table{
+    width: 100%;
+}
+
+th,td{
+    border-right: 1px solid black;
+}
+
+.no-border{
+    border-right: none;
+}
+
+input{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
