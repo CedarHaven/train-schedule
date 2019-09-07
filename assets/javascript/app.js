@@ -46,7 +46,8 @@ database.ref().on("child_added", function(snapshot) {
 
     // if the time until the next train in minutes is negative, we know the train came some time in the past, and that we need to figure out how many minutes ago the last train was. that time will be negative and I got it by doing the modulus thing with the time between now and when the train last came and the intervals that the train comes in.
     // I honestly don't know why this works, okay? math is not my strong suit. I fucked around until it made sense.
-    // anyway, that tells you "the train came (x) many minutes ago", so then I added the interval the train comes in to that, so we get up to "the next train will be here in this many minutes."
+    // anyway, that tells you "the train came (x) many minutes ago".
+    // after that, I added the interval frequency to the minsTil; we can't get a positive number from the negative number modulus, and if minsTil is 0 that means the train is coming in exactly the interval time, and if it's a negative number that means some of the time has already passed until the next train comes.
     // then I add that to the nextArrival thing, so we know the next time the train's coming, and then based on that, calculate the number of minutes until that train comes.
     // if the timeUntil variable is positive, the train hasn't come yet--so I just set minsTil to the same number of minutes as timeUntil, added that to the nextArrival thing, and changed the 'currentDiff', which tells you how far away the train is, to timeUntil.
     if(timeUntil < 0) {
