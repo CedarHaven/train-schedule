@@ -1,5 +1,5 @@
 # train-schedule
-This is a train scheduling thing. You enter a train name, destination, how frequently the train comes, and when the train starts coming, and then the table of trains is updated with the train's name, destination, the next time it's coming based on the current time, and how many minutes away it is. It uses Firebase to store train information. The train table assumes no delays, ever, and updates pretty much only if you reload the page.
+This is a train scheduling thing. You enter a train name, destination, how frequently the train comes, and when the train starts coming, and then the table of trains is updated with the train's name, destination, the next time it's coming based on the current time, and how many minutes away it is. It uses Firebase to store train information. The train table assumes no delays, ever, and updates pretty much only if you reload the page. It runs on proper military time, meaning that there are no AM or PM markers on the schedule display, and also meaning that if you want to have a train start at any time past noon, you need to enter the time according to military time.
 
 ## Installation
 
