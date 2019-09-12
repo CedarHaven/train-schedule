@@ -12,18 +12,32 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// firebase database variable
 var database = firebase.database();
 
+// variables for:
+// train name
+// train destination
+// the time the train starts coming
+// the frequency with which the train comes
+// the time of the next arrival of the train
+// the time until the next arrival of the train
+// variable for the difference between times
+// variable for the current time as a moment.js object. I'm not sure if I need this, actually, but I don't want to delete it because it's 11:30pm and I don't want to break my code right now.
+// the converted time variable, for converting whatever you enter as the start time into a moment.js object.
 var name;
 var place;
-var startTime = "15:30";
-var timeFrequency = 30;
+var startTime;
+var timeFrequency;
 var nextArrival;
 var timeUntil;
 var currentDiff;
 var currentTime = moment().format("HH:mm");
 var convertedTime;
 
+// on click of add train button, get the name of the train, the place it's going, the time it starts arriving, and how often it shows up
+// parse the frequency of train arrivals into an int. when I didn't do this, I was getting errors about timeFrequency not being an integer, so.
+// push these variables to the databse.
 $("#add-train").on("click", function() {
     name = $("#name").val().trim();
     place = $("#place").val().trim();
@@ -40,6 +54,9 @@ $("#add-train").on("click", function() {
     });
 });
 
+// on page load, print out the information for the trains as rows in the table I made.
+// convert the startTime found in the snapshot into a moment.js object, for calculations and such
+// get the difference between the time the train arrives and the current time, save as a variable for calculations
 database.ref().on("child_added", function(snapshot) {
     convertedTime = moment(snapshot.val().startTime, "HH:mm");
     timeUntil = convertedTime.diff(moment(), "minutes");
@@ -62,10 +79,7 @@ database.ref().on("child_added", function(snapshot) {
         currentDiff = timeUntil;
     }
 
-    // now that we know when the next train comes, we get the difference in minutes between now and the next train, so we can tell the person how far away the train is.
-    // if the train hasn't come yet, this will be literally the same time in minutes as timeUntil, which is repetitive, I guess, but....what can you do. I need a single variable to put in the body of the table.
-    // currentDiff = nextArrival.diff(moment(), "minutes");
-
+    // append the information on the train to the table. also, handle errors.
     $("#body").append("<tr><td>"+snapshot.val().name+"</td><td>"+snapshot.val().place+"</td><td>"+snapshot.val().timeFrequency+"</td><td>"+nextArrival.format("HH:mm")+"</td><td class='no-border'>"+currentDiff+"</td></tr>");
 }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
