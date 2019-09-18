@@ -15,25 +15,15 @@ firebase.initializeApp(firebaseConfig);
 // firebase database variable
 var database = firebase.database();
 
-// variables for:
-// train name
-// train destination
-// the time the train starts coming
-// the frequency with which the train comes
-// the time of the next arrival of the train
-// the time until the next arrival of the train
-// variable for the difference between times
-// variable for the current time as a moment.js object. I'm not sure if I need this, actually, but I don't want to delete it because it's 11:30pm and I don't want to break my code right now.
-// the converted time variable, for converting whatever you enter as the start time into a moment.js object.
-var name;
-var place;
-var startTime;
-var timeFrequency;
-var nextArrival;
-var timeUntil;
-var currentDiff;
-var currentTime = moment().format("HH:mm");
-var convertedTime;
+var name; // train name
+var place; // train destination
+var startTime; // the time the train starts coming
+var timeFrequency; // the frequency with which the train comes
+var nextArrival; // the time of the next arrival of the train
+var timeUntil; // the time until the next arrival of the train
+var currentDiff; // variable for the difference between times
+var currentTime = moment().format("HH:mm"); // variable for the current time as a moment.js object. I'm not sure if I need this, actually, but I don't want to delete it because it's 11:30pm and I don't want to break my code right now.
+var convertedTime; // the converted time variable, for converting whatever you enter as the start time into a moment.js object.
 
 // on click of add train button, get the name of the train, the place it's going, the time it starts arriving, and how often it shows up
 // parse the frequency of train arrivals into an int. when I didn't do this, I was getting errors about timeFrequency not being an integer, so.
@@ -46,12 +36,20 @@ $("#add-train").on("click", function() {
 
     timeFrequency = parseInt(timeFrequency);
 
-    database.ref().push({
-        name: name,
-        place: place,
-        startTime: startTime,
-        timeFrequency: timeFrequency
-    });
+    // this validates that you've entered a positive number for the time frequency, because...negative numbers wouldn't make sense.
+    // if you haven't entered a positive number, the train is not saved and you are alerted that you've entered an invalid input.
+    // if you have entered a positive number, the train is saved to the database and will subsequently be added to the table.
+    if(timeFrequency < 0) {
+        alert("Invalid time frequency. Please enter a positive number.");
+    }
+    else{
+        database.ref().push({
+            name: name,
+            place: place,
+            startTime: startTime,
+            timeFrequency: timeFrequency
+        });
+    }
 });
 
 // on page load, print out the information for the trains as rows in the table I made.
@@ -80,7 +78,7 @@ database.ref().on("child_added", function(snapshot) {
     }
 
     // append the information on the train to the table. also, handle errors.
-    $("#body").append("<tr><td>"+snapshot.val().name+"</td><td>"+snapshot.val().place+"</td><td>"+snapshot.val().timeFrequency+"</td><td>"+nextArrival.format("HH:mm")+"</td><td class='no-border'>"+currentDiff+"</td></tr>");
+    $("#body").append(`<tr><td>${snapshot.val().name}</td><td>${snapshot.val().place}</td><td>${snapshot.val().timeFrequency}</td><td>${nextArrival.format("HH:mm")}</td><td class="no-border">${currentDiff}</td></tr>`);
 }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
 });
